@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="bh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Pyaar Tools - गर्लफ्रेंड के इम्प्रेस करो, भोजपुरी स्टाइल में!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background: #030304; color: #fff; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #444; }
+
+        .gradient-title {
+            background: linear-gradient(135deg, #FFFFFF 0%, #f472b6 50%, #fb923c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-subtitle {
+            background: linear-gradient(to right, #e2e8f0, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-panel:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px) scale(0.98);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: blur(10px);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+        .delay-500 { transition-delay: 500ms; }
+
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle at center, rgba(244, 114, 182, 0.15) 0%, rgba(0,0,0,0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .hero-glow-orange {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle at center, rgba(251, 146, 60, 0.1) 0%, rgba(0,0,0,0) 70%);
+            top: 30%;
+            right: 10%;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        .float-anim { animation: float 3s ease-in-out infinite; }
+
+        @keyframes pulse-heart {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        .pulse-heart { animation: pulse-heart 1.5s ease-in-out infinite; }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .shimmer-btn {
+            background: linear-gradient(90deg, #f472b6, #fb923c, #f472b6, #fb923c);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spin-slow { animation: spin-slow 20s linear infinite; }
+
+        .tool-card {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(244, 114, 182, 0.15);
+        }
+
+        .praise-card {
+            transition: all 0.4s ease;
+        }
+        .praise-card:hover {
+            transform: scale(1.03);
+        }
+
+        .typing-dots span {
+            animation: blink 1.4s infinite both;
+        }
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes blink {
+            0%, 80%, 100% { opacity: 0; }
+            40% { opacity: 1; }
+        }
+
+        #demo-output {
+            min-height: 80px;
+        }
+
+        .counter-num {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .nav-blur {
+            backdrop-filter: blur(12px);
+            background: rgba(3, 3, 4, 0.8);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .toast {
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast fixed bottom-6 right-6 z-[100] glass-panel rounded-2xl px-6 py-4 flex items-center gap-3 max-w-sm">
+        <span class="text-2xl pulse-heart">💝</span>
+        <p id="toast-msg" class="text-sm text-slate-300"></p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-blur fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-6">
+        <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl pulse-heart">💕</span>
+                <span class="text-lg font-bold tracking-tight">AI <span class="text-pink-400">Pyaar</span> Tools</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#tools" class="text-sm text-slate-400 hover:text-white transition-colors duration-150">टूल्स</a>
+                <a href="#features" class="text-sm text-slate-400 hover:text-white transition-colors duration-150">खासियत</a>
+                <a href="#praise" class="text-sm text-slate-400 hover:text-white transition-colors duration-150">तारीफ</a>
+                <a href="#demo" class="text-sm text-slate-400 hover:text-white transition-colors duration-150">डेमो</a>
+                <a href="#pricing" class="text-sm text-slate-400 hover:text-white transition-colors duration-150">कीमत</a>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="showToast('बाबू, पहिले टूल चला लो फिर देखता जा! 😎')" class="shimmer-btn text-black text-xs font-semibold px-5 py-2.5 rounded-full hover:opacity-90 transition-all duration-300" style="box-shadow: 0 0 20px -5px rgba(244,114,182,0.5);">
+                    अभी शुरू करो 🚀
+                </button>
+                <button id="mobile-menu-btn" class="md:hidden text-white">
+                    <span class="iconify" data-icon="mdi:menu" data-width="24"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 hidden" style="background: rgba(3,3,4,0.95); backdrop-filter: blur(12px);">
+        <div class="flex flex-col items-center justify-center h-full gap-8">
+            <a href="#tools" onclick="closeMobile()" class="text-2xl font-medium text-slate-300 hover:text-pink-400 transition-colors">🔧 टूल्स</a>
+            <a href="#features" onclick="closeMobile()" class="text-2xl font-medium text-slate-300 hover:text-pink-400 transition-colors">⚡ खासियत</a>
+            <a href="#praise" onclick="closeMobile()" class="text-2xl font-medium text-slate-300 hover:text-pink-400 transition-colors">👏 तारीफ</a>
+            <a href="#demo" onclick="closeMobile()" class="text-2xl font-medium text-slate-300 hover:text-pink-400 transition-colors">🎯 डेमो</a>
+            <a href="#pricing" onclick="closeMobile()" class="text-2xl font-medium text-slate-300 hover:text-pink-400 transition-colors">💰 कीमत</a>
+            <button onclick="closeMobile()" class="mt-8 text-slate-500 text-sm">बंद करो ✕</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 flex flex-col items-center text-center px-6 overflow-hidden">
+        <div class="hero-glow"></div>
+        <div class="hero-glow-orange"></div>
+
+        <!-- Floating hearts decoration -->
+        <div class="absolute top-20 left-10 text-3xl float-anim opacity-20" style="animation-delay: 0s;">💗</div>
+        <div class="absolute top-40 right-16 text-2xl float-anim opacity-15" style="animation-delay: 0.5s;">💕</div>
+        <div class="absolute bottom-20 left-20 text-4xl float-anim opacity-10" style="animation-delay: 1s;">❤️‍🔥</div>
+        <div class="absolute bottom-32 right-10 text-2xl float-anim opacity-15" style="animation-delay: 1.5s;">💘</div>
+
+        <div class="reveal relative z-10">
+            <div class="inline-flex items-center gap-2 glass-panel rounded-full px-4 py-2 mb-8">
+                <span class="w-2 h-2 rounded-full bg-emerald-400" style="box-shadow: 0 0 10px rgba(16,185,129,0.8);"></span>
+                <span class="text-xs font-medium text-slate-400 tracking-wide">10,000+ लोग इम्प्रेस कर चुकल बाड़न 🔥</span>
+            </div>
+        </div>
+
+        <h1 class="reveal delay-100 relative z-10 text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] max-w-4xl gradient-title">
+            AI से गर्लफ्रेंड के<br>इम्प्रेस करो, भोजपुरी स्टाइल में!
+        </h1>
+
+        <p class="reveal delay-200 relative z-10 mt-6 text-lg md:text-xl font-light leading-relaxed text-slate-400 max-w-2xl">
+            लव लेटर, शायरी, कम्प्लिमेंट, गिफ्ट आइडिया, गुड मॉर्निंग मैसेज — सब कुछ AI से, सब कुछ भोजपुरी में। अब ना बोलो "मेरा ते कुछ ना आवे" 😏
+        </p>
+
+        <div class="reveal delay-300 relative z-10 flex flex-col sm:flex-row items-center gap-4 mt-10">
+            <button onclick="document.getElementById('tools').scrollIntoView({behavior:'smooth'})" class="shimmer-btn text-black font-semibold px-8 py-4 rounded-full text-sm hover:opacity-90 transition-all duration-300 flex items-center gap-2" style="box-shadow: 0 0 30px -5px rgba(244,114,182,0.5);">
+                <span class="iconify" data-icon="mdi:heart-multiple" data-width="18"></span>
+                टूल्स देखो बाबू
+            </button>
+            <button onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})" class="glass-panel px-8 py-4 rounded-full text-sm font-medium text-slate-300 hover:text-white transition-all duration-300 flex items-center gap-2">
+                <span class="iconify" data-icon="mdi:play-circle-outline" data-width="18"></span>
+                लाइव डेमो चलाओ
+            </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="reveal delay-400 relative z-10 grid grid-cols-3 gap-8 mt-16 max-w-lg">
+            <div class="text-center">
+                <div class="text-2xl md:text-3xl font-bold text-white counter-num" data-target="10452">0</div>
+                <div class="text-xs text-slate-500 mt-1">खुश लोग</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl md:text-3xl font-bold text-white counter-num" data-target="8">0</div>
+                <div class="text-xs text-slate-500 mt-1">AI टूल्स</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl md:text-3xl font-bold text-white counter-num" data-target="99">0</div>
+                <div class="text-xs text-slate-500 mt-1">% सफलता</div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="reveal delay-500 relative z-10 mt-16 flex flex-col items-center gap-2">
+            <span class="text-[10px] text-slate-600 uppercase tracking-widest">नीचे स्क्रॉल करो</span>
+            <div class="w-5 h-8 border border-slate-700 rounded-full flex justify-center pt-1.5">
+                <div class="w-1 h-2 bg-pink-400 rounded-full animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Tools Section -->
+    <section id="tools" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <div class="reveal inline-flex items-center gap-2 glass-panel rounded-full px-4 py-2 mb-6">
+                    <span class="text-xs font-medium text-pink-400 tracking-wide">🔧 जबरदस्त टूल्स</span>
+                </div>
+                <h2 class="reveal delay-100 text-3xl md:text-5xl font-bold tracking-tight gradient-title">
+                    8 AI टूल्स, 1 मिशन — उसके दिल में बसो 💘
+                </h2>
+                <p class="reveal delay-200 mt-4 text-slate-400 text-lg font-light max-w-2xl mx-auto">
+                    हर टूल खास बनावल गइल बा तोहरे ला, ताकि ऊ कहे "का बा, इतना अच्छा कवन बा तू!"
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Tool 1 -->
+                <div class="reveal tool-card glass-panel rounded-2xl p-6 cursor-pointer group" onclick="showToast('लव लेटर टूल खुल रहा बा... 💝')">
+                    <div class="w-12 h-12 rounded-xl bg-pink-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-150">
+                        <span class="iconify text-pink-400" data-icon="mdi:letter-heart" data-width="24"></span>
+                    </div>
+                    <h3 class="text-base font-medium mb-2">💌 AI लव लेटर</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">बस उसके नाम डालो, AI पूरा लव लेटर लिख देब जेवन पढ़ के उसके आंख में आंसू आ जाई</p>
+                    <div class="mt-4 flex items-center gap-1 text-xs text-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>अभी ट्राई करो</span>
+                        <span class="iconify" data-icon="mdi:arrow-right" data-width="14"></span>
+                    </div>
+                </div>
+
+                <!-- Tool 2 -->
+                <div class="reveal delay-100 tool-card glass-panel rounded-2xl p-6 cursor-pointer group" onclick="showToast('शायरी टूल लोड हो रहा बा... 🎭')">
+                    <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-150">
+                        <span class="iconify text-orange-400" data-icon="mdi:feather" data-width="24"></span>
+                    </div>
+                    <h3 class="text-base font-medium mb-2">🎭 भोजपुरी शायरी</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">AI से असली भोजपुरी शायरी जवन दिल छू जाए — "तोहरे बिना जिनगी बीरान लागेला"</p>
+                    <div class="mt-4 flex items-center gap-1 text-xs text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>अभी ट्राई करो</span>
+                        <span class="iconify" data-icon="mdi:arrow-right" data-width="14"></span>
+                    </div>
+                </div>
+
+                <!-- Tool 3 -->
+                <div class="reveal delay-200 tool-card glass-panel rounded-2xl p-6 cursor-pointer group" onclick="showToast('कम्प्लिमेंट जनरेटर तैयार बा! 😍')">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-150">
+                        <span class="iconify text-purple-400" data-icon="mdi:star-face" data-width="24"></span>
+                    </div>
+                    <h3 class="text-base font-medium mb-2">😍 कम्प्लिमेंट मशीन</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">हर रोज नया कम्प्लिमेंट — "तोहरे आंख में सारा जहां बा, बाकी सब फीका लागेला"</p>
+                    <div class="mt-4 flex items-center gap-1 text-xs text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>अभी ट्राई करो</span>
+                        <span class="iconify" data-icon="mdi:arrow-right" data-width="14"></span>
+                    </div>
+                </div>
+
+                <!-- Tool 4 -->
+                <div class="reveal delay-300 tool-card glass-panel rounded-2xl p-6 cursor-pointer group" onclick="showToast('गिफ्ट आइडिया आ रहा बा... 🎁')">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-150">
+                        <span class="iconify text-emerald-400" data-icon="mdi:gift" data-width="24"></span>
+                    </div>
+                    <h3 class="text-base font-medium mb-2">🎁 गिफ्ट सुझाव</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">बजट बताओ, AI बताव बा का गिफ्ट देबा — चाहे ₹100 होखे चाहे ₹10000</p>
+                    <div class="mt-4 flex items-center gap-1 text-xs text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>अभी ट्राई करो</span>
+                        <span class="iconify" data-icon="mdi:arrow-right" data-width="14"></span>
+                    </div>
+                </div>
+
+                <!-- Tool 5 -->
+                <div class="reveal tool-card glass-panel rounded-2xl p-6 cursor-pointer group" onclick="showToast('गुड मॉर्निंग मैसेज रेडी! 🌅')">
+                    <div class="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-150">
+                        <span class="iconify text-yellow-400" data-icon="mdi:weather-sunny" data-width="24"></span>
+                    </div>
+                    <h3 class="text-base font-medium mb-2">🌅 गुड मॉर्निंग MSG</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">रोज सुबह नया मैसेज — "उठ जा रानी, सूरज तोहरे ला देख खातिर उठल बा"</p>
+                    <div class="mt-4 flex items-center gap-1 text-xs text-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>अभी ट्राई करो</span>
+                        <span class="iconify" data-icon="mdi:arrow-right" data-width="14"></span>
+                    </div>
+                </div>
+
+                <!-- Tool 6 -->
+                <div class="reveal delay-100 tool-card glass-panel rounded-2xl p-6 cursor-pointer group" onclick="showToast('सॉरी मैसेज बन रहा बा... 😢')">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-150">
+                        <span class="iconify text-blue-400" data-icon="mdi:hand-heart" data-width="24"></span>
+                    </div>
+                    <h3 class="text-base font-medium mb-2">😢 सॉरी मैसेज जनरेटर</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">लड़ाई भई? गुस्सा बा? AI अइसन सॉरी मैसेज लिखी जेवन गुस्सा पानी में हो जाई</p>
+                    <div class="mt-4 flex items-center gap-1 text-xs text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>अभी ट्राई करो</span>
+                        <span class="iconify" data-icon="mdi:arrow-right" data-width="14"></span>
+                    </div>
+                </div>
+
+                <!-- Tool 7 -->
+                <div class="reveal delay-200 tool-card glass-panel rounded-2xl p-6 cursor-pointer group" onclick="showToast('डेट प्लान बन रहा बा... 🌙')">
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-150">
+                        <span class="iconify text-rose-400" data-icon="mdi:map-marker-heart" data-width="24"></span>
+                    </div>
+                    <h3 class="text-base font-medium mb-2">🌙 डेट प्लानर</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">शहर बताओ, बजट बताओ — AI पूरा डेट प्लान बना देब जेवन फिल्म जइसन लागे</p>
+                    <div class="mt-4 flex items-center gap-1 text-xs text-rose-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>अभी ट्राई करो</span>
+                        <span class="iconify" data-icon="mdi:arrow-right" data-width="14"></span>
+                    </div>
+                </div>
+
+                <!-- Tool 8 -->
+                <div class="reveal delay-300 tool-card glass-panel rounded-2xl p-6 cursor-pointer group" onclick="showToast('पिकअप लाइन आ रहा बा... 😏')">
+                    <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-150">
+                        <span class="iconify text-red-400" data-icon="mdi:chat-processing" data-width="24"></span>
+                    </div>
+                    <h3 class="text-base font-medium mb-2">😏 पिकअप लाइन्स</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">भोजपुरी स्टाइल पिकअप लाइन — "का हो रानी, मोबाइल ते ना देख, इहां देख!"</p>
+                    <div class="mt-4 flex items-center gap-1 text-xs text-red-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span>अभी ट्राई करो</span>
+                        <span class="iconify" data-icon="mdi:arrow-right" data-width="14"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 px-6" style="background: #050507;">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <div class="reveal inline-flex items-center gap-2 glass-panel rounded-full px-4 py-2 mb-6">
+                    <span class="text-xs font-medium text-orange-400 tracking-wide">⚡ खासियत</span>
+                </div>
+                <h2 class="reveal delay-100 text-3xl md:text-5xl font-bold tracking-tight gradient-title">
+                    ई टूल्स काहे सबसे अलग बा?
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="reveal glass-panel rounded-2xl p-8">
+                    <div class="text-3xl mb-4">🧠</div>
+                    <h3 class="text-lg font-medium mb-2">समझदार AI</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">ई AI सिर्फ अंग्रेजी ना, बल्कि शुद्ध भोजपुरी में सोचेला आ लिखेला। कवनो ट्रांसलेटर ना, असली भोजपुरी AI!</p>
+                </div>
+                <div class="reveal delay-100 glass-panel rounded-2xl p-8">
+                    <div class="text-3xl mb-4">⚡</div>
+                    <h3 class="text-lg font-medium mb-2">झटपट रिजल्ट</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">2 सेकंड में लव लेटर, 1 सेकंड में शायरी। जब तक तू सोचत बा, AI लिख के दे देला!</p>
+                </div>
+                <div class="reveal delay-200 glass-panel rounded-2xl p-8">
+                    <div class="text-3xl mb-4">🎭</div>
+                    <h3 class="text-lg font-medium mb-2">मूड अनुसार</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">रोमांटिक चाहे फनी, सीरियस चाहे क्यूट — तू बता, AI ओही स्टाइल में लिखी</p>
+                </div>
+                <div class="reveal delay-300 glass-panel rounded-2xl p-8">
+                    <div class="text-3xl mb-4">🔒</div>
+                    <h3 class="text-lg font-medium mb-2">पूरा प्राइवेट</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">तोहरा नाम, तोहरा गर्लफ्रेंड के नाम — कुछो सेव ना होला। 100% गोपनीय!</p>
+                </div>
+                <div class="reveal delay-400 glass-panel rounded-2xl p-8">
+                    <div class="text-3xl mb-4">📱</div>
+                    <h3 class="text-lg font-medium mb-2">मोबाइल फ्रेंडली</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">फोन से भी, लैपटॉप से भी — कहीं से भी चला सकत बा। WhatsApp पे कॉपी करके सीधे भेजो!</p>
+                </div>
+                <div class="reveal delay-500 glass-panel rounded-2xl p-8">
+                    <div class="text-3xl mb-4">🔄</div>
+                    <h3 class="text-lg font-medium mb-2">अनलिमिटेड जनरेट</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">कतना चाहो उतना जनरेट करो। एक ना पसंद आवे ते दोसरा, दोसरा ना आवे ते तीसरा!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Praise / Testimonials Section -->
+    <section id="praise" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <div class="reveal inline-flex items-center gap-2 glass-panel rounded-full px-4 py-2 mb-6">
+                    <span class="text-xs font-medium text-emerald-400 tracking-wide">👏 लोग का बोलत बाड़न</span>
+                </div>
+                <h2 class="reveal delay-100 text-3xl md:text-5xl font-bold tracking-tight gradient-title">
+                    "ई टूल्स तो कमाल बा!" — असली लोग, असली बातें
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Praise 1 -->
+                <div class="reveal praise-card glass-panel rounded-2xl p-8 relative">
+                    <div class="absolute -top-3 -left-2 text-5xl opacity-30">"</div>
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="text-yellow-400 text-sm">★★★★★</span>
+                    </div>
+                    <p class="text-sm text-slate-300 leading-relaxed mb-6">"भाई, मैं त पहिले गर्लफ्रेंड के एक लाइन भी ना लिख पात रहु। अब AI से लव लेटर भेजत बान आ ऊ कहेली 'का बा, इतना अच्छा कवन बा तू!' मेरा ते विश्वास ना होत रहे! 😭💕"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-pink-500/20 flex items-center justify-center text-sm font-bold text-pink-400">रा</div>
+                        <div>
+                            <div class="text-sm font-medium">राजू भैया</div>
+                            <div class="text-xs text-slate-500">पटना, बिहार</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Praise 2 -->
+                <div class="reveal delay-100 praise-card glass-panel rounded-2xl p-8 relative">
+                    <div class="absolute -top-3 -left-2 text-5xl opacity-30">"</div>
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="text-yellow-400 text-sm">★★★★★</span>
+                    </div>
+                    <p class="text-sm text-slate-300 leading-relaxed mb-6">"गुस्सा भई गर्लफ्रेंड के, सॉरी मैसेज जनरेटर चलाइली — 5 मिनट में फोन आ गइल 'माफ कर देलीं बाबू'। ई AI त मेरा रिश्ता बचा दिहलस! बाबू तोहरा ला दुआँ! 🙏❤️"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center text-sm font-bold text-orange-400">प्र</div>
+                        <div>
+                            <div class="text-sm font-medium">प्रिंस गुप्ता</div>
+                            <div class="text-xs text-slate-500">वाराणसी, UP</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Praise 3 -->
+                <div class="reveal delay-200 praise-card glass-panel rounded-2xl p-8 relative">
+                    <div class="absolute -top-3 -left-2 text-5xl opacity-30">"</div>
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="text-yellow-400 text-sm">★★★★★</span>
+                    </div>
+                    <p class="text-sm text-slate-300 leading-relaxed mb-6">"शायरी टूल त ऐसन बा कि मेरा गर्लफ्रेंड कहेली 'तू त कवि बा का?' हा हा हा! AI ह बा बाबू, बाकी मैं त चाय बनावे में माहिर बानी! 😂🫖"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-sm font-bold text-purple-400">सु</div>
+                        <div>
+                            <div class="text-sm font-medium">सुनील साहू</div>
+                            <div class="text-xs text-slate-500">गोरखपुर, UP</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Praise 4 -->
+                <div class="reveal praise-card glass-panel rounded-2xl p-8 relative">
+                    <div class="absolute -top-3 -left-2 text-5xl opacity-30">"</div>
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="text-yellow-400 text-sm">★★★★★</span>
+                    </div>
+                    <p class="text-sm text-slate-300 leading-relaxed mb-6">"गिफ्ट सुझाव टूल से ₹500 में अइसन गिफ्ट लिहली कि गर्लफ्रेंड रो पड़ली खुशी से। बजट कम बा बाकी दिल बड़ा बा — ई AI समझेला ई बात! 🎁💕"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-sm font-bold text-emerald-400">अ</div>
+                        <div>
+                            <div class="text-sm font-medium">अमन यादव</div>
+                            <div class="text-xs text-slate-500">मुजफ्फरपुर, बिहार</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Praise 5 -->
+                <div class="reveal delay-100 praise-card glass-panel rounded-2xl p-8 relative">
+                    <div class="absolute -top-3 -left-2 text-5xl opacity-30">"</div>
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="text-yellow-400 text-sm">★★★★★</span>
+                    </div>
+                    <p class="text-sm text-slate-300 leading-relaxed mb-6">"डेट प्लानर से प्लान बनवली — पार्क, चाय, गोलगप्पा, आ फिर सूर्यास्त देखली। गर्लफ्रेंड बोलली 'तू त फिल्म डायरेक्टर बा!' AI जिंदाबाद! 🎬🌹"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-sm font-bold text-blue-400">वि</div>
+                        <div>
+                            <div class="text-sm font-medium">विक्की तिवारी</div>
+                            <div class="text-xs text-slate-500">लखनऊ, UP</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Praise 6 -->
+                <div class="reveal delay-200 praise-card glass-panel rounded-2xl p-8 relative">
+                    <div class="absolute -top-3 -left-2 text-5xl opacity-30">"</div>
+                    <div class="flex items-center gap-1 mb-4">
+                        <span class="text-yellow-400 text-sm">★★★★★</span>
+                    </div>
+                    <p class="text-sm text-slate-300 leading-relaxed mb-6">"रोज सुबह गुड मॉर्निंग मैसेज अब AI से भेजत बान। गर्लफ्रेंड कहेली 'तू कब से इतना स्मार्ट हो गइल?' — चुप रहलीं बाबू, चुप! 😤🤫"</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-rose-500/20 flex items-center justify-center text-sm font-bold text-rose-400">दि</div>
+                        <div>
+                            <div class="text-sm font-medium">दीपक कुमार</div>
+                            <div class="text-xs text-slate-500">भागलपुर, बिहार</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Demo Section -->
+    <section id="demo" class="py-24 px-6" style="background: #050507;">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-12">
+                <div class="reveal inline-flex items-center gap-2 glass-panel rounded-full px-4 py-2 mb-6">
+                    <span class="text-xs font-medium text-purple-400 tracking-wide">🎯 लाइव डेमो</span>
+                </div>
+                <h2 class="reveal delay-100 text-3xl md:text-5xl font-bold tracking-tight gradient-title">
+                    अभी ट्राई करो, फ्री में!
+                </h2>
+                <p class="reveal delay-200 mt-4 text-slate-400 font-light">नीचे अपना गर्लफ्रेंड के नाम डालो आ टूल चुनो — AI अभी लिख के देब!</p>
+            </div>
+
+            <div class="reveal delay-300 glass-panel rounded-2xl p-8">
+                <!-- Name Input -->
+                <div class="mb-6">
+                    <label class="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2 block">गर्लफ्रेंड के नाम</label>
+                    <input id="gf-name" type="text" placeholder="जइसन: प्रिया, स्नेहा, रानी..." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-pink-500/50 focus:ring-1 focus:ring-pink-500/20 transition-all">
+                </div>
+
+                <!-- Tool Select -->
+                <div class="mb-6">
+                    <label class="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2 block">टूल चुनो</label>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        <button onclick="selectTool(this, 'love')" class="tool-select-btn active-tool px-3 py-2.5 rounded-xl text-xs font-medium border border-pink-500/30 bg-pink-500/10 text-pink-400 transition-all">💌 लव लेटर</button>
+                        <button onclick="selectTool(this, 'shayari')" class="tool-select-btn px-3 py-2.5 rounded-xl text-xs font-medium border border-white/10 bg-white/5 text-slate-400 hover:border-white/20 transition-all">🎭 शायरी</button>
+                        <button onclick="selectTool(this, 'compliment')" class="tool-select-btn px-3 py-2.5 rounded-xl text-xs font-medium border border-white/10 bg-white/5 text-slate-400 hover:border-white/20 transition-all">😍 तारीफ</button>
+                        <button onclick="selectTool(this, 'pickup')" class="tool-select-btn px-3 py-2.5 rounded-xl text-xs font-medium border border-white/10 bg-white/5 text-slate-400 hover:border-white/20 transition-all">😏 पिकअप</button>
+                    </div>
+                </div>
+
+                <!-- Mood Select -->
+                <div class="mb-6">
+                    <label class="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2 block">मूड</label>
+                    <div class="flex gap-2 flex-wrap">
+                        <button onclick="selectMood(this, 'romantic')" class="mood-btn active-mood px-4 py-2 rounded-full text-xs font-medium border border-rose-500/30 bg-rose-500/10 text-rose-400 transition-all">💕 रोमांटिक</button>
+                        <button onclick="selectMood(this, 'funny')" class="mood-btn px-4 py-2 rounded-full text-xs font-medium border border-white/10 bg-white/5 text-slate-400 hover:border-white/20 transition-all">😂 फनी</button>
+                        <button onclick="selectMood(this, 'emotional')" class="mood-btn px-4 py-2 rounded-full text-xs font-medium border border-white/10 bg-white/5 text-slate-400 hover:border-white/20 transition-all">😢 इमोशनल</button>
+                        <button onclick="selectMood(this, 'cute')" class="mood-btn px-4 py-2 rounded-full text-xs font-medium border border-white/10 bg-white/5 text-slate-400 hover:border-white/20 transition-all">🥰 क्यूट</button>
+                    </div>
+                </div>
+
+                <!-- Generate Button -->
+                <button id="generate-btn" onclick="generateContent()" class="w-full shimmer-btn text-black font-semibold py-4 rounded-xl text-sm hover:opacity-90 transition-all duration-300 flex items-center justify-center gap-2" style="box-shadow: 0 0 30px -5px rgba(244,114,182,0.4);">
+                    <span class="iconify" data-icon="mdi:auto-fix" data-width="18"></span>
+                    AI से जनरेट करो ✨
+                </button>
+
+                <!-- Output -->
+                <div id="demo-output" class="mt-6 min-h-[80px] rounded-xl bg-white/3 border border-white/5 p-5 hidden">
+                    <div id="output-text" class="text-sm text-slate-300 leading-relaxed"></div>
+                    <div class="mt-4 flex items-center gap-3">
+                        <button onclick="copyOutput()" class="flex items-center gap-1.5 text-xs text-slate-500 hover:text-white transition-colors">
+                            <span class="iconify" data-icon="mdi:content-copy" data-width="14"></span>
+                            कॉपी करो
+                        </button>
+                        <button onclick="generateContent()" class="flex items-center gap-1.5 text-xs text-slate-500 hover:text-white transition-colors">
+                            <span class="iconify" data-icon="mdi:refresh" data-width="14"></span>
+                            दोबारा जनरेट करो
+                        </button>
+                        <button onclick="shareWhatsApp()" class="flex items-center gap-1.5 text-xs text-emerald-500 hover:text-emerald-400 transition-colors">
+                            <span class="iconify" data-icon="mdi:whatsapp" data-width="14"></span>
+                            WhatsApp पे भेजो
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loading-state" class="mt-6 hidden flex items-center gap-3 justify-center py-8">
+                    <div class="typing-dots flex gap-1">
+                        <span class="w-2 h-2 bg-pink-400 rounded-full"></span>
+                        <span class="w-2 h-2 bg-pink-400 rounded-full"></span>
+                        <span class="w-2 h-2 bg-pink-400 rounded-full"></span>
+                    </div>
+                    <span class="text-sm text-slate-500">AI सोचत बा...</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-24 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <div class="reveal inline-flex items-center gap-2 glass-panel rounded-full px-4 py-2 mb-6">
+                    <span class="text-xs font-medium text-blue-400 tracking-wide">📋 काम कइसे करेला</span>
+                </div>
+                <h2 class="reveal delay-100 text-3xl md:text-5xl font-bold tracking-tight gradient-title">
+                    3 आसान स्टेप, बस इत्तना!
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="reveal text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-pink-500/10 flex items-center justify-center mx-auto mb-4 text-3xl font-bold text-pink-400" style="box-shadow: 0 0 30px -5px rgba(244,114,182,0.2);">1</div>
+                    <h3 class="text-base font-medium mb-2">नाम डालो</h3>
+                    <p class="text-sm text-slate-500">अपना गर्लफ्रेंड के नाम आ टूल चुनो — बस!</p>
+                </div>
+                <div class="reveal delay-100 text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-orange-500/10 flex items-center justify-center mx-auto mb-4 text-3xl font-bold text-orange-400" style="box-shadow: 0 0 30px -5px rgba(251,146,60,0.2);">2</div>
+                    <h3 class="text-base font-medium mb-2">AI लिखे ला</h3>
+                    <p class="text-sm text-slate-500">AI 2 सेकंड में तैयार कर देब — भोजपुरी में, दिल छू के!</p>
+                </div>
+                <div class="reveal delay-200 text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 flex items-center justify-center mx-auto mb-4 text-3xl font-bold text-emerald-400" style="box-shadow: 0 0 30px -5px rgba(16,185,129,0.2);">3</div>
+                    <h3 class="text-base font-medium mb-2">भेजो आ इम्प्रेस करो</h3>
+                    <p class="text-sm text-slate-500">कॉपी करो, WhatsApp पे भेजो, आ फिर उसके मुस्कान देखो!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-24 px-6" style="background: #050507;">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <div class="reveal inline-flex items-center gap-2 glass-panel rounded-full px-4 py-2 mb-6">
+                    <span class="text-xs font-medium text-emerald-400 tracking-wide">💰 कीमत</span>
+                </div>
+                <h2 class="reveal delay-100 text-3xl md:text-5xl font-bold tracking-tight gradient-title">
+                    प्यार के कीमत ना होला, बाकी टूल्स के होला 😄
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Free -->
+                <div class="reveal glass-panel rounded-2xl p-8">
+                    <div class="text-xs font-medium text-slate-500 uppercase tracking-wider mb-4">फ्री प्लान</div>
+                    <div class="flex items-baseline gap-1 mb-2">
+                        <span class="text-4xl font-bold">₹0</span>
+                        <span class="text-slate-500 text-sm">/महीना</span>
+                    </div>
+                    <p class="text-sm text-slate-500 mb-6">ट्राई करो, पसंद आवे ते अपग्रेड करो</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-2 text-sm text-slate-400">
+                            <span class="iconify text-emerald-400" data-icon="mdi:check-circle" data-width="16"></span>
+                            रोज 5 जनरेशन
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-slate-400">
+                            <span class="iconify text-emerald-400" data-icon="mdi:check-circle" data-width="16"></span>
+                            3 टूल्स एक्सेस
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-slate-400">
+                            <span class="iconify text-emerald-400" data-icon="mdi:check-circle" data-width="16"></span>
+                            बेसिक शायरी आ लेटर
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-slate-600">
+                            <span class="iconify" data-icon="mdi:close-circle" data-width="16"></span>
+                            प्रीमियम टूल्स ना
+                        </li>
+                    </ul>
+                    <button onclick="showToast('फ्री प्लान एक्टिवेट! अभी ऊपर डेमो ट्राई करो! 🎉')" class="w-full py-3 rounded-xl text-sm font-medium border border-white/10 text-slate-300 hover:bg-white/5 transition-all">
+                        फ्री में शुरू करो
+                    </button>
+                </div>
+
+                <!-- Pro -->
+                <div class="reveal delay-100 relative rounded-2xl p-8 border-2 border-pink-500/30" style="background: rgba(244,114,182,0.03); box-shadow: 0 25px 50px -12px rgba(244,114,182,0.15);">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 shimmer-btn text-black text-[10px] font-bold px-4 py-1 rounded-full uppercase tracking-wider">
+                        सबसे पॉपुलर 🔥
+                    </div>
+                    <div class="text-xs font-medium text-pink-400 uppercase tracking-wider mb-4">प्रो प्लान</div>
+                    <div class="flex items-baseline gap-1 mb-2">
+                        <span class="text-4xl font-bold">₹99</span>
+                        <span class="text-slate-500 text-sm">/महीना</span>
+                    </div>
+                    <p class="text-sm text-slate-500 mb-6">जबरदस्त वैल्य, सब टूल्स खुला</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-2 text-sm text-slate-300">
+                            <span class="iconify text-emerald-400" data-icon="mdi:check-circle" data-width="16"></span>
+                            अनलिमिटेड जनरेशन
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-slate-300">
+                            <span class="iconify text-emerald-400" data-icon="mdi:check-circle" data-width="16"></span>
+                            सब 8 टूल्स एक्सेस
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-slate-300">
+                            <span class="iconify text-emerald-400" data-icon="mdi:check-circle" data-width="16"></span>
+                            सब मूड उपलब्ध
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-slate-300">
+                            <span class="iconify text-emerald-400" data-icon="mdi:check-circle" data-width="16"></span>
+                            WhatsApp सीधे भेजो
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-slate-300">
+                            <span class="iconify text-emerald-400" data-icon="mdi:check-circle" data-width="16"></span>
+                            प्राथमिक सपोर्ट
+                        </li>
+                    </ul>
+                    <button onclick="showToast('बाबू, प्रो प्लान चुनला — बढ़िया चुनाव! 💪🔥')" class="w-full shimmer-btn py-3 rounded-xl text-sm font-semibold text-black hover:opacity-90 transition-all" style="box-shadow: 0 0 20px -5px rgba(244,114,182,0.5);">
+                        अभी प्रो लेलो 🚀
+                    </button>
+                </div>
+
+                <!-- Ultimate -->
+                <div class="reveal delay-200 glass-panel rounded-2xl p-8">
+                    <div class="text-xs font-medium text-orange-400 uppercase tracking-wider mb-4">अल्टीमेट प्लान</div>
+                    <div class="flex items-baseline gap-1 mb-2">
+                        <span class="text-4xl font-bold">₹199</span>
+                        <span class="text-slate-500 text-sm">/महीना</span>
+                    </div>
+                    <p class="text-sm text-slate-500 mb-6">जेवन तू चाहो ओवन जेवन चाहो</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-2 text-sm text-slate-400">
+                            <span class="iconify text-emerald-400" data-icon="mdi:check-circle" data-width="16"></span>
+                            सब कुछ प्रो में जवन बा
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-slate-400">
+                            <span class="iconify text-emerald-400" data-icon="mdi:check-circle" data-width="16"></span>
+                            कस्टम AI ट्रेनिंग
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-slate-400">
+                            <span class="iconify text-emerald-400" data-icon="mdi:check-circle" data-width="16"></span>
+                            रिलेशनशिप काउंसलर AI
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-slate-400">
+                            <span class="iconify text-emerald-400" data-icon="mdi:check-circle" data-width="16"></span>
+                            एनिवर्सरी प्लानर
+                        </li>
+                        <li class="flex items-center gap-2 text-sm text-slate-400">
+                            <span class="iconify text-emerald-400" data-icon="mdi:check-circle" data-width="16"></span>
+                            24/7 प्राथमिक सपोर्ट
+                        </li>
+                    </ul>
+                    <button onclick="showToast('अल्टीमेट प्लान — तू त राजा बा रे! 👑💕')" class="w-full py-3 rounded-xl text-sm font-medium border border-orange-500/30 text-orange-400 hover:bg-orange-500/10 transition-all">
+                        अल्टीमेट लेलो 👑
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 px-6 relative overflow-hidden">
+        <div class="absolute inset-0" style="background: radial-gradient(circle at center, rgba(244,114,182,0.08) 0%, transparent 70%);"></div>
+        <div class="reveal relative z-10 max-w-3xl mx-auto text-center">
+            <div class="text-6xl mb-6 pulse-heart">💝</div>
+            <h2 class="text-3xl md:text-5xl font-bold tracking-tight gradient-title mb-6">
+                अब देरी काहे बा बाबु?<br>जाओ, इम्प्रेस करो!
+            </h2>
+            <p class="text-lg text-slate-400 font-light mb-10 max-w-xl mx-auto">
+                तोहरा गर्लफ्रेंड इंतज़ार करत बाड़ी कि तू कब कुछ खास बोलबा। AI ह तोहरा साथ, अब ना हिचकिचाओ!
+            </p>
+            <button onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})" class="shimmer-btn text-black font-semibold px-10 py-5 rounded-full text-base hover:opacity-90 transition-all duration-300 inline-flex items-center gap-3" style="box-shadow: 0 0 40px -5px rgba(244,114,182,0.5);">
+                <span class="iconify" data-icon="mdi:heart-flash" data-width="20"></span>
+                अभी शुरू करो, फ्री में!
+            </button>
+            <p class="mt-4 text-xs text-slate-600">कवनो क्रेडिट कार्ड ना चाही — सिर्फ नाम डालो आ शुरू!</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-white/5" style="background: #050507;">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xl pulse-heart">💕</span>
+                        <span class="font-bold">AI Pyaar Tools</span>
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed">भोजपुरी में AI टूल्स — गर्लफ्रेंड इम्प्रेस करे के सबसे आसान तरीका!</p>
+                </div>
+                <div>
+                    <h4 class="text-xs font-medium uppercase tracking-wider text-slate-500 mb-4">टूल्स</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-xs text-slate-600 hover:text-white transition-colors">लव लेटर</a></li>
+                        <li><a href="#" class="text-xs text-slate-600 hover:text-white transition-colors">शायरी</a></li>
+                        <li><a href="#" class="text-xs text-slate-600 hover:text-white transition-colors">कम्प्लिमेंट</a></li>
+                        <li><a href="#" class="text-xs text-slate-600 hover:text-white transition-colors">गिफ्ट आइडिया</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-medium uppercase tracking-wider text-slate-500 mb-4">और टूल्स</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-xs text-slate-600 hover:text-white transition-colors">गुड मॉर्निंग MSG</a></li>
+                        <li><a href="#" class="text-xs text-slate-600 hover:text-white transition-colors">सॉरी मैसेज</a></li>
+                        <li><a href="#" class="text-xs text-slate-600 hover:text-white transition-colors">डेट प्लानर</a></li>
+                        <li><a href="#" class="text-xs text-slate-600 hover:text-white transition-colors">पिकअप लाइन्स</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xs font-medium uppercase tracking-wider text-slate-500 mb-4">बाकी चीज़ें</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-xs text-slate-600 hover:text-white transition-colors">प्राइवेसी पॉलिसी</a></li>
+                        <li><a href="#" class="text-xs text-slate-600 hover:text-white transition-colors">टर्म्स ऑफ सर्विस</a></li>
+                        <li><a href="#" class="text-xs text-slate-600 hover:text-white transition-colors">कस्टमर सपोर्ट</a></li>
+                        <li><a href="#" class="text-xs text-slate-600 hover:text-white transition-colors">हमनी के बारे में</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-slate-600">© 2025 AI Pyaar Tools. सब अधिकार सुरक्षित. 💕</p>
+                <p class="text-xs text-slate-700">भोजपुरी में प्यार के AI — दुनिया के पहिला!</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.counter-num');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.getAttribute('data-target'));
+                    let current = 0;
+                    const increment = target / 60;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+                        el.textContent = Math.floor(current).toLocaleString();
+                        if (target === 99) el.textContent += '%';
+                        if (target === 8) el.textContent += '+';
+                        if (target === 10452) el.textContent = '10,452+';
+                    }, 30);
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(c => counterObserver.observe(c));
+
+        // Mobile Menu
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.remove('hidden');
+        });
+        function closeMobile() {
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        // Toast
+        let toastTimeout;
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        // Tool Selection
+        let selectedTool = 'love';
+        function selectTool(btn, tool) {
+            selectedTool = tool;
+            document.querySelectorAll('.tool-select-btn').forEach(b => {
+                b.classList.remove('active-tool');
+                b.className = b.className.replace(/border-pink-500\/30 bg-pink-500\/10 text-pink-400/g, 'border-white/10 bg-white/5 text-slate-400');
+            });
+            btn.classList.add('active-tool');
+            btn.className = btn.className.replace(/border-white\/10 bg-white\/5 text-slate-400/g, 'border-pink-500/30 bg-pink-500/10 text-pink-400');
+        }
+
+        // Mood Selection
+        let selectedMood = 'romantic';
+        function selectMood(btn, mood) {
+            selectedMood = mood;
+            document.querySelectorAll('.mood-btn').forEach(b => {
+                b.classList.remove('active-mood');
+                b.className = b.className.replace(/border-rose-500\/30 bg-rose-500\/10 text-rose-400/g, 'border-white/10 bg-white/5 text-slate-400');
+            });
+            btn.classList.add('active-mood');
+            btn.className = btn.className.replace(/border-white\/10 bg-white\/5 text-slate-400/g, 'border-rose-500/30 bg-rose-500/10 text-rose-400');
+        }
+
+        // Content Database
+        const contentDB = {
+            love: {
+                romantic: [
+                    "मेरा प्यारा {name},\n\nआज मैं तोहरे बारे में सोचत-सोचत रात भर जागल रहु। तोहरे बिना ई दुनिया मेरा खातिर बीरान लागेला। जब तू हँसेली त सूरज उग जाला, जब तू रोवेली त मेरा दिल में बादल घर जाला।\n\nतू जानत बा, तोहरे से पहिले मैं ना जानत रहु कि प्यार कइसन लागेला। तू आवे आ मेरा जिनगी बदल दिहली। अब हर सुबह तोहरे नाम से शुरू होला आ हर रात तोहरा ख्याल से।\n\nतोहरा बस मेरा रहबा — इही मेरा दुआ बा। 💕\n\nतोहरा अपना,\nतोहरा प्यारा",
+                    "{name} मेरी जान,\n\nलिखत-लिखत कलम रुक जाला बाकी दिल ना रुकेला। तोहरे ला कवन बताऊं कि मैं कतना प्यार करत बानी? शब्द छोटा पड़ जाला तोहरे प्यार के आगे।\n\nतोहरे हँसी में मेरा जिनगी बा, तोहरे आंख में मेरा दुनिया बा। तू मेरा सुख-दुख, मेरा खुशी-गम, सब कुछ बा।\n\nबस एक वादा कर — हमेशा मेरा साथ रहिह। बाकी मैं हर जनम तोहरा खातिर जियत बानी। 💘\n\nतोहरा,\nहमेशा तोहरा"
+                ],
+                funny: [
+                    "{name} बाबू,\n\nसुनो जरा ध्यान से — मैं तोहरे बिना ना रह सकत, ई त तू जानत बा। बाकी तू जानत बा कि मैं बिना मगी भी ना रह सकत? 😂\n\nचलो असली बात करत बानी — तू लागेली मुझे बहुत खास, चाहे तू गुस्सा करे चाहे ना करे, चाहे तू रोटी बनाये चाहे जला दे — मैं तोहरा ही चाहूँगा! 🍕\n\nप्यार करत बानी,\nतोहरा अजीब बाबू",
+                    "प्रिय {name},\n\nमैं आज बहुत सीरियस बात करत बानी — तोहरे बिना मेरा जिनगी जइसन छोटी चीज़ बा, उहे जइसन बिना चाय के मोर्निंग। बिल्कुल बर्बाद! 😂\n\nबाकी मज़ाक करत बानी, असल में तू मेरा जिनगी बा। चाय भी चाही, तू भी चाही! ☕❤️\n\nतोहरा,\nचाह-प्यार वाला"
+                ],
+                emotional: [
+                    "{name} मेरी जान,\n\nआज रात बहुत याद आवत बा तोहरा। जब हम पहिली बार मिलल रही ना — तोहरा आंख में जवन चमक रहे रहे, ऊ आज भी मेरा आंख के सामने बा।\n\nकाहे जानत बा {name}, कभी-कभी डर लागेला — कहीं तू मेरा छोड़ ना दे। कहीं ई प्यार कम ना हो जाए। बाकी फिर सोचत बानी — जवन दिल से प्यार करल बा, ऊ कबी ना टूटे।\n\nतू सिर्फ मेरा रहिह, बस ई काफी बा। 😢💕\n\nतोहरा,\nबस तोहरा",
+                    "{name},\n\nमैं कबो बोलत ना रहु बाकी आज बोलत बानी — तू मेरा ताकत बा, तू मेरा कमज़ोरी भी बा। जब तू साथ रहेली त लगेला कि कुछो ना हो सकेला, जब तू दूर रहेली त डर लागेला।\n\nई प्यार ना, ई ज़रूरत बा मेरा — तोहरा ज़रूरत। 🥺❤️"
+                ],
+                cute: [
+                    "{name} बाबू!\n\nतू जानत बा का? आज तोहरे बारे में सोचत-सोचत चाय ठंडा हो गइल! 😂\n\nबाकी कवन बात बा, तू ह त बहुत क्यूट — जब तू हँसेली त चाँद भी शर्मा जाला, जब तू नाराज़ होवेली त पूरा दुनिया उदास हो जाला।\n\nबस एक बात करो — हमेशा एहन हँसत रहिह, खुश रहिह। मेरा दुनिया तोहरा हँसी पे चलेला! 🥰\n\nतोहरा क्यूटू,\nक्यूटू का प्यारा",
+                    "हेलो {name}! 🌸\n\nसुनो जरा — तू बहुत प्यारी बा, बहुत सुंदर बा, बहुत अच्छी बा... आ मैं तोहरा बहुत चाहत बानी! बस इत्तना! 😄\n\nचलो अब मिलत बानी, गोलगप्पा खाइत बानी — तोहरा खातिर! 🫧💕\n\nतोहरा,\nगोलगप्पा वाला प्यार"
+                ]
+            },
+            shayari: {
+                romantic: [
+                    "तोहरे बिना जिनगी बीरान लागेला {name},\nतोहरे बिना ई दिल बेचैन लागेला।\nजब तू मुस्कुरावेली त फूल खिल जाला,\nजब तू रोवेली त बादल घिर जाला। 💕",
+                    "{name} तोहरे खातिर लिखल शायरी,\nहर लाइन में बस तोहरा ही पुकारल बा।\nदुनिया के कवनो शायर ना समझ सकी,\nई प्यार के अंदाज़ कइसन बा! 🌹",
+                    "अंखिया में तू बसेली {name} रानी,\nदिल में तू ही तू बानी।\nसपना में भी तू आवेली,\nजागत में भी तू नज़र आवेली। 💘"
+                ],
+                funny: [
+                    "{name}, सुनो जरा ई शायरी —\nतोहरे बिना मैं डूबत बानी,\nबाकी तू त डूबत बा पकौड़ा में! 😂\n\nचलो दुनो मिल के डूबत बानी —\nमैं प्यार में, तू तेल में! 🫔",
+                    "तोहरे खातिर चाँद तारे तोड़ लाऊँगा {name},\nबाकी पहिले बता — चाँद के का करूँगा? सब्जी बनाऊँगा? 🥘😂"
+                ],
+                emotional: [
+                    "{name} बिन ई दिल उदास रहेला,\nहर पल तोहरा इंतज़ार रहेला।\nआंख से आंसू बहेला बिन तोहरे,\nकवनो रात ना गुज़रेला सही से। 😢❤️",
+                    "कागज़ पे लिखत बानी तोहरा नाम {name},\nबाकी कलम रुक जाला बीच में।\nकवनो शब्द ना मिलेला तोहरे प्यार खातिर,\nई दिल के बात कागज़ पे ना लिखल जात। 📝💕"
+                ],
+                cute: [
+                    "{name} तू लागेली चाँद से प्यारी,\nतू लागेली तारों से न्यारी।\nतोहरा देखत बानी त दिल धड़केला,\nकाहे बा तू इतना प्यारी! 🌸🥰",
+                    "चिड़िया गावेली कोयल बोलेली,\n{ name} के याद में दिल डोलेली।\nआवो जरा पास मेरा रानी,\nबहुत प्यार आवेला तोहरा खातिर! 🐦💕"
+                ]
+            },
+            compliment: {
+                romantic: [
+                    "{name}, तोहरे आंख में सारा जहां बा जवन मैं ढूँढत रहु। तू ना सिर्फ सुंदर बा, तू पूरा जिनगी बा मेरा। तोहरा मुस्कान देख के लगेला जइसन बस सब ठीक बा! 💕",
+                    "सुनो {name}, तू जानत बा तू कतना खास बा? तोहरे आवे से पहिले मैं जिनगी जीत रहु रहु, बाकी तोहरे आवे के बाद मैं जिनगी महसूस करत बानी! 😘"
+                ],
+                funny: [
+                    "{name}, तू इतना सुंदर बा कि अगर तू आइना देखे त आइना भी शर्मा जाई! बाकी सच बताऊं — आइना त शर्माई, मैं त बेहोश हो गइली! 😂💕",
+                    "{name} तू लागेली मिठाई से भी मीठी — बाकी मैं त डायबिटीज़ वाला हूँ, तू देखत बानी त शुगर लेवल बढ़ जाला! 🍬😂"
+                ],
+                emotional: [
+                    "{name}, कवनो दिन ऐसन ना आवे जब मैं तोहरा तारीफ ना करूँ। तू मेरा सबसे बड़ा खज़ाना बा — जवन कबी ना चोरी होई! 😢💕",
+                    "दुनिया के सबसे अच्छी चीज़ {name} बा — ई बात मैं ना बोलत, मेरा आंख बोलेला जब तू नज़र आवेली! 🥺❤️"
+                ],
+                cute: [
+                    "{name} बाबू, तू लागेली बिल्ली से भी क्यूट — बाकी बिल्ली त स्क्रैच करेली, तू त दिल में घर कर लेली! 🐱🥰",
+                    "{name}, तोहरा देख के लगेला जइसन ऊपर वाला धीरे-धीरे बनावत रहल आ आखिर में बोलल — 'हो गइल, परफेक्ट!' ✨💕"
+                ]
+            },
+            pickup: {
+                romantic: [
+                    "{name}, का हो रानी — मोबाइल ते ना देख, इहां देख! तोहरे आंख में मेरा नाम लिखल बा, पढ़ ले एक बार! 😏💕",
+                    "सुनो {name} — मैं त आसमान से गिरल बानी, बाकी तोहरा देखते लगे त लगे जइसन अभी गिरल बानी! 🌟😘"
+                ],
+                funny: [
+                    "{name}, तू जानत बा का — मैं तोहरा इतना चाहत बानी जेतना बिरयानी के चाहत बानी! आ तू जानत बा कि मैं बिरयानी के कतना चाहत बानी! 😂🍚❤️",
+                    "अरे {name} — तू त ऐसन लागेली जइसन मैंने सपना में देखल रहु। बाकी सच बताऊं — सपना में तू बिरयानी बना रहली रही! 😂🍛"
+                ],
+                emotional: [
+                    "{name}, मैं कबो पिकअप लाइन ना बोलत बानी बाकी तोहरा देख के मजबूर हो गइली — 'तू मेरा होगी, ई दुनिया कहीं ना होगी!' 🥺❤️",
+                    "{name}... बस तोहरा नाम लेत बानी आ दिल धड़कने लागेला — ई कवनो पिकअप लाइन ना, ई मेरा हालत बा! 😢💕"
+                ],
+                cute: [
+                    "{name} हेलो! — का बा, ऊपर से गिरल बानी या तोहरा देख के बेहोश हो गइली, पता ना लागेला! 🤕🥰",
+                    "ए {name} — तू तोहरा चाबी दे दे, मेरा दिल के ताला तोहरा नाम से बंद बा! 🔑💕"
+                ]
+            }
+        };
+
+        // Generate Content
+        function generateContent() {
+            const name = document.getElementById('gf-name').value.trim() || 'रानी';
+            const output = document.getElementById('demo-output');
+            const outputText = document.getElementById('output-text');
+            const loading = document.getElementById('loading-state');
+            const btn = document.getElementById('generate-btn');
+
+            output.classList.add('hidden');
+            loading.classList.remove('hidden');
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+
+            setTimeout(() => {
+                const items = contentDB[selectedTool][selectedMood];
+                const randomItem = items[Math.floor(Math.random() * items.length)];
+                const result = randomItem.replace(/\{name\}/g, name);
+
+                loading.classList.add('hidden');
+                output.classList.remove('hidden');
+                outputText.textContent = '';
+
+                // Typing effect
+                let i = 0;
+                const typeInterval = setInterval(() => {
+                    if (i < result.length) {
+                        outputText.textContent += result[i];
+                        i++;
+                    } else {
+                        clearInterval(typeInterval);
+                    }
+                }, 20);
+
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }, 1500);
+        }
+
+        // Copy Output
+        function copyOutput() {
+            const text = document.getElementById('output-text').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('कॉपी हो गइल! अब WhatsApp पे भेज दो! 📋✅');
+            });
+        }
+
+        // Share WhatsApp
+        function shareWhatsApp() {
+            const text = encodeURIComponent(document.getElementById('output-text').textContent);
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
